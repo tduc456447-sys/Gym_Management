@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7268A66D-2F23-4392-9179-4D9CCD92B330}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Gym_Management</RootNamespace>
+    <AssemblyName>Gym_Management</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.6.0-preview1-final\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.6.0-preview1-final\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="data\DBHelper.cs" />
+    <Compile Include="Main\Admin\frmImportReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\frmImportReceipt.Designer.cs">
+      <DependentUpon>frmImportReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\MainAdminForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\MainAdminForm.Designer.cs">
+      <DependentUpon>MainAdminForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ProductManagement\frmProductManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ProductManagement\frmProductManagement.Designer.cs">
+      <DependentUpon>frmProductManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmAttendanceReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmAttendanceReport.Designer.cs">
+      <DependentUpon>frmAttendanceReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmCurrentWeekSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmCurrentWeekSchedule.Designer.cs">
+      <DependentUpon>frmCurrentWeekSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmEmployeeAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmEmployeeAccounts.Designer.cs">
+      <DependentUpon>frmEmployeeAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmNextWeekSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmNextWeekSchedule.Designer.cs">
+      <DependentUpon>frmNextWeekSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmPendingApprovals.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmPendingApprovals.Designer.cs">
+      <DependentUpon>frmPendingApprovals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmSalaryCalculation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmSalaryCalculation.Designer.cs">
+      <DependentUpon>frmSalaryCalculation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmStaffManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmStaffManagement.Designer.cs">
+      <DependentUpon>frmStaffManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ucAdminDashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ucAdminDashboard.Designer.cs">
+      <DependentUpon>ucAdminDashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\AddCustomerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\AddCustomerForm.Designer.cs">
+      <DependentUpon>AddCustomerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\DashboardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\DashboardForm.Designer.cs">
+      <DependentUpon>DashboardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\InvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\InvoiceForm.Designer.cs">
+      <DependentUpon>InvoiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\MainStaffForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\MainStaffForm.Designer.cs">
+      <DependentUpon>MainStaffForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\MemberDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\MemberDetailForm.Designer.cs">
+      <DependentUpon>MemberDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\MembersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\MembersForm.Designer.cs">
+      <DependentUpon>MembersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\RegisterMembershipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\RegisterMembershipForm.Designer.cs">
+      <DependentUpon>RegisterMembershipForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\RenewMembershipForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\RenewMembershipForm.Designer.cs">
+      <DependentUpon>RenewMembershipForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\SalesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\SalesForm.Designer.cs">
+      <DependentUpon>SalesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\ShiftAttendanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\ShiftAttendanceForm.Designer.cs">
+      <DependentUpon>ShiftAttendanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\ShiftCalendarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\ShiftCalendarForm.Designer.cs">
+      <DependentUpon>ShiftCalendarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\ShiftRegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\ShiftRegisterForm.Designer.cs">
+      <DependentUpon>ShiftRegisterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\ucDayShift.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\ucDayShift.Designer.cs">
+      <DependentUpon>ucDayShift.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Taikhoan\frmChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Taikhoan\frmChangePassword.Designer.cs">
+      <DependentUpon>frmChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Taikhoan\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Taikhoan\frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Taikhoan\frmRegister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Taikhoan\frmRegister.Designer.cs">
+      <DependentUpon>frmRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Taikhoan\SecurityHelper.cs" />
+    <EmbeddedResource Include="Main\Admin\MainAdminForm.resx">
+      <DependentUpon>MainAdminForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\ProductManagement\frmProductManagement.resx">
+      <DependentUpon>frmProductManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmEmployeeAccounts.resx">
+      <DependentUpon>frmEmployeeAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmPendingApprovals.resx">
+      <DependentUpon>frmPendingApprovals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmSalaryCalculation.resx">
+      <DependentUpon>frmSalaryCalculation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmStaffManagement.resx">
+      <DependentUpon>frmStaffManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Staff\DashboardForm.resx">
+      <DependentUpon>DashboardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Staff\MainStaffForm.resx">
+      <DependentUpon>MainStaffForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Staff\ucDayShift.resx">
+      <DependentUpon>ucDayShift.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Taikhoan\frmChangePassword.resx">
+      <DependentUpon>frmChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Taikhoan\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Taikhoan\frmRegister.resx">
+      <DependentUpon>frmRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.6.0-preview1-final\build\EntityFramework.targets')" />
+</Project>
