@@ -151,6 +151,12 @@
     <Compile Include="Main\Staff\MainStaffForm.Designer.cs">
       <DependentUpon>MainStaffForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmManagingPT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\StaffManagement\frmManagingPT.Designer.cs">
+      <DependentUpon>frmManagingPT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\Staff\MemberDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Staff\MainStaffForm.resx">
       <DependentUpon>MainStaffForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmManagingPT.resx">
+      <DependentUpon>frmManagingPT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Staff\ucDayShift.resx">
       <DependentUpon>ucDayShift.cs</DependentUpon>

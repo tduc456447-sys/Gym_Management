@@ -15,7 +15,6 @@
         private System.Windows.Forms.Button btnStaffManagement;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnSystemConfig;
-        private System.Windows.Forms.Button btnReports;
         private System.Windows.Forms.Button btnLogout;
 
         protected override void Dispose(bool disposing)
@@ -29,7 +28,6 @@
         private void InitializeComponent()
         {
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btnReports = new System.Windows.Forms.Button();
             this.btnSystemConfig = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnStaffManagement = new System.Windows.Forms.Button();
@@ -39,7 +37,8 @@
             this.lblAdminName = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnHLV = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
@@ -47,8 +46,8 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.panelMenu.Controls.Add(this.button1);
-            this.panelMenu.Controls.Add(this.btnReports);
+            this.panelMenu.Controls.Add(this.button2);
+            this.panelMenu.Controls.Add(this.btnHLV);
             this.panelMenu.Controls.Add(this.btnSystemConfig);
             this.panelMenu.Controls.Add(this.btnImport);
             this.panelMenu.Controls.Add(this.btnStaffManagement);
@@ -59,24 +58,6 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(220, 700);
             this.panelMenu.TabIndex = 0;
-            // 
-            // btnReports
-            // 
-            this.btnReports.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.btnReports.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnReports.FlatAppearance.BorderSize = 0;
-            this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReports.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnReports.ForeColor = System.Drawing.Color.White;
-            this.btnReports.Location = new System.Drawing.Point(0, 220);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.btnReports.Size = new System.Drawing.Size(220, 55);
-            this.btnReports.TabIndex = 4;
-            this.btnReports.Text = "Báo cáo";
-            this.btnReports.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReports.UseVisualStyleBackColor = false;
-            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
             // 
             // btnSystemConfig
             // 
@@ -184,7 +165,7 @@
             this.lblAdminName.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.lblAdminName.Location = new System.Drawing.Point(700, 20);
             this.lblAdminName.Name = "lblAdminName";
-            this.lblAdminName.Size = new System.Drawing.Size(64, 23);
+            this.lblAdminName.Size = new System.Drawing.Size(68, 25);
             this.lblAdminName.TabIndex = 1;
             this.lblAdminName.Text = "Admin";
             // 
@@ -194,7 +175,7 @@
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(20, 15);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(59, 32);
+            this.lblTitle.Size = new System.Drawing.Size(63, 35);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "title";
             // 
@@ -207,22 +188,40 @@
             this.panelContent.Size = new System.Drawing.Size(980, 640);
             this.panelContent.TabIndex = 2;
             // 
-            // button1
+            // btnHLV
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(0, 275);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.button1.Size = new System.Drawing.Size(220, 55);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Báo cáo";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnHLV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnHLV.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnHLV.FlatAppearance.BorderSize = 0;
+            this.btnHLV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHLV.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnHLV.ForeColor = System.Drawing.Color.White;
+            this.btnHLV.Location = new System.Drawing.Point(0, 220);
+            this.btnHLV.Name = "btnHLV";
+            this.btnHLV.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnHLV.Size = new System.Drawing.Size(220, 55);
+            this.btnHLV.TabIndex = 6;
+            this.btnHLV.Text = "Quản lý HLV";
+            this.btnHLV.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnHLV.UseVisualStyleBackColor = false;
+            this.btnHLV.Click += new System.EventHandler(this.btnHLV_Click);
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(0, 275);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.button2.Size = new System.Drawing.Size(220, 55);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Báo cáo";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // MainAdminForm
             // 
@@ -244,6 +243,7 @@
 
         }
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnHLV;
     }
 }

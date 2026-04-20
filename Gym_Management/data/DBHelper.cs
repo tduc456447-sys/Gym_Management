@@ -10,7 +10,7 @@ namespace Gym_Management.Data
 {
     internal class DBHelper
     {
-        private string connectionString = @"Data Source=localhost\MSSQL__SERVER;Initial Catalog=GymManagementV2;Integrated Security=True;TrustServerCertificate=True";
+        private string connectionString = @"Data Source=QUANG\SQLEXPRESS;Initial Catalog=GymManagementV2;Integrated Security=True;TrustServerCertificate=True";
 
         public DBHelper() { }
 

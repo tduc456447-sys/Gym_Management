@@ -1,9 +1,11 @@
-﻿using Gym_Management.TaiKhoan;
+﻿using Gym_Management.Main.Staff;
+using Gym_Management.TaiKhoan;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace Gym_Management
 {
@@ -15,6 +17,7 @@ namespace Gym_Management
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmLogin());
+            //Application.Run(new frmRegisterStaff());
         }
     }
 }

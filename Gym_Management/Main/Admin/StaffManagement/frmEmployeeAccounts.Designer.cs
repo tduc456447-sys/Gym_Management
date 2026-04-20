@@ -107,7 +107,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(282, 80);
+            this.panelTop.Size = new System.Drawing.Size(1343, 80);
             this.panelTop.TabIndex = 0;
             // 
             // lblHeader
@@ -116,7 +116,7 @@
             this.lblHeader.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
             this.lblHeader.Location = new System.Drawing.Point(20, 10);
             this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(262, 30);
+            this.lblHeader.Size = new System.Drawing.Size(273, 31);
             this.lblHeader.TabIndex = 0;
             this.lblHeader.Text = "TÀI KHOẢN NHÂN VIÊN";
             // 
@@ -201,7 +201,7 @@
             this.panelForm.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelForm.Location = new System.Drawing.Point(0, 80);
             this.panelForm.Name = "panelForm";
-            this.panelForm.Size = new System.Drawing.Size(282, 230);
+            this.panelForm.Size = new System.Drawing.Size(1343, 230);
             this.panelForm.TabIndex = 1;
             // 
             // lblUserId
@@ -429,7 +429,7 @@
             this.panelGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelGrid.Location = new System.Drawing.Point(0, 310);
             this.panelGrid.Name = "panelGrid";
-            this.panelGrid.Size = new System.Drawing.Size(282, 0);
+            this.panelGrid.Size = new System.Drawing.Size(1343, 264);
             this.panelGrid.TabIndex = 2;
             // 
             // dgvEmployees
@@ -446,7 +446,7 @@
             this.dgvEmployees.RowHeadersWidth = 51;
             this.dgvEmployees.RowTemplate.Height = 24;
             this.dgvEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmployees.Size = new System.Drawing.Size(282, 0);
+            this.dgvEmployees.Size = new System.Drawing.Size(1343, 264);
             this.dgvEmployees.TabIndex = 0;
             this.dgvEmployees.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEmployees_CellClick);
             // 
@@ -454,7 +454,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 253);
+            this.ClientSize = new System.Drawing.Size(1343, 574);
             this.Controls.Add(this.panelGrid);
             this.Controls.Add(this.panelForm);
             this.Controls.Add(this.panelTop);

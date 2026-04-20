@@ -2,6 +2,7 @@
 using Gym_Management.Main.Admin.ImportManagement;
 using Gym_Management.Main.Admin.ProductManagement;
 using Gym_Management.Main.Admin.StaffManagement;
+using Gym_Management.Main.Staff;
 using Gym_Management.TaiKhoan;
 using System;
 using System.Windows.Forms;
@@ -85,6 +86,11 @@ namespace Gym_Management.Main.Admin
                 frmLogin login = new frmLogin();
                 login.Show();
             }
+        }
+
+        private void btnHLV_Click(object sender, EventArgs e)
+        {
+            LoadFormToPanel(new frmManagingPT());
         }
     }
 }

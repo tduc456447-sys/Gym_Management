@@ -331,7 +331,7 @@ namespace Gym_Management.Main.Admin.ImportManagement
         private void ResetForm()
         {
             dtpDate.Value = DateTime.Now;
-            txtSupplier.Clear();
+            cboSupplier.SelectedIndex = -1;
             txtNote.Clear();
             ClearItemInput();
 
