@@ -360,7 +360,7 @@
             this.txtSearch.Font = new System.Drawing.Font("Segoe UI", 11F);
             this.txtSearch.Location = new System.Drawing.Point(20, 10);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(320, 33);
+            this.txtSearch.Size = new System.Drawing.Size(320, 32);
             this.txtSearch.TabIndex = 6;
             // 
             // dgvPT
@@ -418,7 +418,7 @@
             // 
             // frmManagingPT
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.ClientSize = new System.Drawing.Size(1280, 780);

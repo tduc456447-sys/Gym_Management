@@ -73,6 +73,12 @@
     <Compile Include="Main\Admin\MainAdminForm.Designer.cs">
       <DependentUpon>MainAdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Admin\ProductManagement\frmimportgoods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ProductManagement\frmimportgoods.Designer.cs">
+      <DependentUpon>frmimportgoods.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\Admin\ProductManagement\frmProductManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -235,11 +241,17 @@
     <EmbeddedResource Include="Main\Admin\MainAdminForm.resx">
       <DependentUpon>MainAdminForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\ProductManagement\frmimportgoods.resx">
+      <DependentUpon>frmimportgoods.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\ProductManagement\frmProductManagement.resx">
       <DependentUpon>frmProductManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\StaffManagement\frmEmployeeAccounts.resx">
       <DependentUpon>frmEmployeeAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmNextWeekSchedule.resx">
+      <DependentUpon>frmNextWeekSchedule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\StaffManagement\frmPendingApprovals.resx">
       <DependentUpon>frmPendingApprovals.cs</DependentUpon>
