@@ -331,6 +331,7 @@ namespace Gym_Management.Main.Admin.ImportManagement
         private void ResetForm()
         {
             dtpDate.Value = DateTime.Now;
+            // cboSupplier is a ComboBox (designer), reset selection instead of referencing a non-existent txtSupplier
             cboSupplier.SelectedIndex = -1;
             txtNote.Clear();
             ClearItemInput();
