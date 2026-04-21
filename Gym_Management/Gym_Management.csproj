@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -61,11 +62,41 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="data\DBHelper.cs" />
-    <Compile Include="Main\Admin\frmImportReceipt.cs">
+    <Compile Include="Main\Admin\ImportManagement\AddBrandForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Admin\frmImportReceipt.Designer.cs">
-      <DependentUpon>frmImportReceipt.cs</DependentUpon>
+    <Compile Include="Main\Admin\ImportManagement\AddBrandForm.Designer.cs">
+      <DependentUpon>AddBrandForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddProductForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddProductForm.Designer.cs">
+      <DependentUpon>AddProductForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddSupplierContactForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddSupplierContactForm.Designer.cs">
+      <DependentUpon>AddSupplierContactForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddSupplierForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddSupplierForm.Designer.cs">
+      <DependentUpon>AddSupplierForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddUnitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\AddUnitForm.Designer.cs">
+      <DependentUpon>AddUnitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\ImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\ImportManagement\ImportForm.Designer.cs">
+      <DependentUpon>ImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Admin\MainAdminForm.cs">
       <SubType>Form</SubType>
@@ -121,6 +152,24 @@
     <Compile Include="Main\Admin\StaffManagement\frmStaffManagement.Designer.cs">
       <DependentUpon>frmStaffManagement.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Admin\TrainerManagement\AddEditTrainerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\TrainerManagement\AddEditTrainerForm.Designer.cs">
+      <DependentUpon>AddEditTrainerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\TrainerManagement\TrainerManagementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\TrainerManagement\TrainerManagementForm.Designer.cs">
+      <DependentUpon>TrainerManagementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\TrainerManagement\TrainerMembersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\TrainerManagement\TrainerMembersForm.Designer.cs">
+      <DependentUpon>TrainerMembersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\Admin\ucAdminDashboard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -139,70 +188,64 @@
     <Compile Include="Main\Staff\DashboardForm.Designer.cs">
       <DependentUpon>DashboardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\InvoiceForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Main\Staff\InvoiceForm.Designer.cs">
-      <DependentUpon>InvoiceForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main\Staff\MainStaffForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main\Staff\MainStaffForm.Designer.cs">
       <DependentUpon>MainStaffForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\MemberDetailForm.cs">
+    <Compile Include="Main\Staff\MembersManagement\MemberDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\MemberDetailForm.Designer.cs">
+    <Compile Include="Main\Staff\MembersManagement\MemberDetailForm.Designer.cs">
       <DependentUpon>MemberDetailForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\MembersForm.cs">
+    <Compile Include="Main\Staff\MembersManagement\MembersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\MembersForm.Designer.cs">
+    <Compile Include="Main\Staff\MembersManagement\MembersForm.Designer.cs">
       <DependentUpon>MembersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\RegisterMembershipForm.cs">
+    <Compile Include="Main\Staff\MembersManagement\RegisterMembershipForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\RegisterMembershipForm.Designer.cs">
+    <Compile Include="Main\Staff\MembersManagement\RegisterMembershipForm.Designer.cs">
       <DependentUpon>RegisterMembershipForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\RenewMembershipForm.cs">
+    <Compile Include="Main\Staff\MembersManagement\RenewMembershipForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\RenewMembershipForm.Designer.cs">
+    <Compile Include="Main\Staff\MembersManagement\RenewMembershipForm.Designer.cs">
       <DependentUpon>RenewMembershipForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\SalesForm.cs">
+    <Compile Include="Main\Staff\SaleManagement\SalesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\SalesForm.Designer.cs">
+    <Compile Include="Main\Staff\SaleManagement\SalesForm.Designer.cs">
       <DependentUpon>SalesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\ShiftAttendanceForm.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ShiftAttendanceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\ShiftAttendanceForm.Designer.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ShiftAttendanceForm.Designer.cs">
       <DependentUpon>ShiftAttendanceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\ShiftCalendarForm.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ShiftCalendarForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\ShiftCalendarForm.Designer.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ShiftCalendarForm.Designer.cs">
       <DependentUpon>ShiftCalendarForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\ShiftRegisterForm.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ShiftRegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main\Staff\ShiftRegisterForm.Designer.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ShiftRegisterForm.Designer.cs">
       <DependentUpon>ShiftRegisterForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Main\Staff\ucDayShift.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ucDayShift.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Main\Staff\ucDayShift.Designer.cs">
+    <Compile Include="Main\Staff\ShiftManagement\ucDayShift.Designer.cs">
       <DependentUpon>ucDayShift.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -232,8 +275,17 @@
     <EmbeddedResource Include="Main\Admin\ProductManagement\frmProductManagement.resx">
       <DependentUpon>frmProductManagement.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmAttendanceReport.resx">
+      <DependentUpon>frmAttendanceReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmCurrentWeekSchedule.resx">
+      <DependentUpon>frmCurrentWeekSchedule.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\StaffManagement\frmEmployeeAccounts.resx">
       <DependentUpon>frmEmployeeAccounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\StaffManagement\frmNextWeekSchedule.resx">
+      <DependentUpon>frmNextWeekSchedule.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\StaffManagement\frmPendingApprovals.resx">
       <DependentUpon>frmPendingApprovals.cs</DependentUpon>
@@ -250,7 +302,10 @@
     <EmbeddedResource Include="Main\Staff\MainStaffForm.resx">
       <DependentUpon>MainStaffForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Main\Staff\ucDayShift.resx">
+    <EmbeddedResource Include="Main\Staff\SaleManagement\SalesForm.resx">
+      <DependentUpon>SalesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Staff\ShiftManagement\ucDayShift.resx">
       <DependentUpon>ucDayShift.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

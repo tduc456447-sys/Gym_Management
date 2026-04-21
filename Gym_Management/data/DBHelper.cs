@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Gym_Management.Data
 {
     internal class DBHelper
     {
-        private string connectionString = @"Data Source=localhost\MSSQL__SERVER;Initial Catalog=GymManagementV2;Integrated Security=True;TrustServerCertificate=True";
+        private static readonly string connectionString =
+            ConfigurationManager.ConnectionStrings["GymManagementDb"]?.ConnectionString
+            ?? throw new Exception("Không tìm thấy connection string 'GymManagementDb' trong App.config");
+
 
         public DBHelper() { }
 

@@ -1,5 +1,4 @@
 ﻿using Gym_Management.Main.Admin;
-using Gym_Management.Main.Admin.ImportManagement;
 using Gym_Management.Main.Admin.ProductManagement;
 using Gym_Management.Main.Admin.StaffManagement;
 using Gym_Management.TaiKhoan;
@@ -57,7 +56,7 @@ namespace Gym_Management.Main.Admin
 
         private void btnImport_Click(object sender, EventArgs e)
         {
-            LoadFormToPanel(new frmImportReceipt());
+            LoadFormToPanel(new ImportForm(_userId,_fullName));
         }
 
         private void btnSystemConfig_Click(object sender, EventArgs e)
@@ -67,7 +66,7 @@ namespace Gym_Management.Main.Admin
 
         private void btnReports_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Chức năng Báo cáo sẽ làm ở bước tiếp theo.");
+            LoadFormToPanel(new TrainerManagementForm(_userId,_fullName));
         }
 
         private void btnLogout_Click(object sender, EventArgs e)

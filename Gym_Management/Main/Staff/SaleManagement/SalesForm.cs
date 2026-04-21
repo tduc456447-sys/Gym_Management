@@ -144,10 +144,11 @@ namespace Gym_Management.Main.Staff
 
             try
             {
+                string fileName = imageFileName.TrimStart('/', '\\');
                 string imageFolder = Path.Combine(Application.StartupPath, "images");
-                string imagePath = Path.Combine(imageFolder, imageFileName);
+                string imagePath = Path.Combine(imageFolder, fileName);
 
-                if (!string.IsNullOrWhiteSpace(imageFileName) && File.Exists(imagePath))
+                if (!string.IsNullOrWhiteSpace(fileName) && File.Exists(imagePath))
                     pbImage.Image = Image.FromFile(imagePath);
                 else
                     pbImage.Image = null;
@@ -601,6 +602,11 @@ namespace Gym_Management.Main.Staff
             txtNote.Text = "";
             cartTable.Rows.Clear();
             UpdateSummary();
+        }
+
+        private void flowProducts_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
