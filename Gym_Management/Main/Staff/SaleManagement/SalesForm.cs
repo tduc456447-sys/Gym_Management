@@ -508,61 +508,18 @@ namespace Gym_Management.Main.Staff
             try
             {
                 decimal subTotal = 0;
-                decimal discountAmount = 0;
                 decimal finalTotal = 0;
 
                 decimal.TryParse(lblSubTotal.Text.Replace(",", ""), out subTotal);
-                string discountText = lblDiscount.Text.Split('(')[0].Trim().Replace(",", "");
-                decimal.TryParse(discountText, out discountAmount);
                 decimal.TryParse(lblFinalTotal.Text.Replace(",", ""), out finalTotal);
 
-                string customerType = isActiveMember ? "Hội viên" : "Khách thường";
+                decimal discountAmount = subTotal * discountPercent / 100M;
 
-                object invoiceIdObj = db.ExecuteScalar("sp_CreateSalesInvoice",
-                    new SqlParameter[]
-                    {
-                        new SqlParameter("@CustomerId", selectedCustomerId == 0 ? (object)DBNull.Value : selectedCustomerId),
-                        new SqlParameter("@SubTotal", subTotal),
-                        new SqlParameter("@DiscountPercent", discountPercent),
-                        new SqlParameter("@DiscountAmount", discountAmount),
-                        new SqlParameter("@FinalTotal", finalTotal),
-                        new SqlParameter("@CustomerType", customerType),
-                        new SqlParameter("@Note", string.IsNullOrWhiteSpace(txtNote.Text) ? (object)DBNull.Value : txtNote.Text.Trim()),
-                        new SqlParameter("@CreatedByStaffId", staffId)
-                    },
-                    CommandType.StoredProcedure);
+                string paymentMethod = cboPaymentMethod.Text;
+                decimal cashReceived = 0;
 
-                int salesInvoiceId = Convert.ToInt32(invoiceIdObj);
-
-                foreach (DataRow row in cartTable.Rows)
+                if (paymentMethod == "Cash")
                 {
-                    db.ExecuteNonQuery("sp_AddSalesInvoiceDetail",
-                        new SqlParameter[]
-                        {
-                            new SqlParameter("@SalesInvoiceId", salesInvoiceId),
-                            new SqlParameter("@ProductId", Convert.ToInt32(row["ProductId"])),
-                            new SqlParameter("@Quantity", Convert.ToInt32(row["Số lượng"])),
-                            new SqlParameter("@Price", Convert.ToDecimal(row["Đơn giá"]))
-                        },
-                        CommandType.StoredProcedure);
-                }
-
-                if (cboPaymentMethod.Text == "Online")
-                {
-                    db.ExecuteNonQuery("sp_PaySalesInvoice",
-                        new SqlParameter[]
-                        {
-                            new SqlParameter("@SalesInvoiceId", salesInvoiceId),
-                            new SqlParameter("@Amount", finalTotal),
-                            new SqlParameter("@Method", "Online"),
-                            new SqlParameter("@CashReceived", DBNull.Value),
-                            new SqlParameter("@ReceivedByStaffId", staffId)
-                        },
-                        CommandType.StoredProcedure);
-                }
-                else
-                {
-                    decimal cashReceived = 0;
                     decimal.TryParse(txtCashReceived.Text.Trim().Replace(",", ""), out cashReceived);
 
                     if (cashReceived < finalTotal)
@@ -570,20 +527,42 @@ namespace Gym_Management.Main.Staff
                         MessageBox.Show("Tiền khách đưa chưa đủ.");
                         return;
                     }
-
-                    db.ExecuteNonQuery("sp_PaySalesInvoice",
-                        new SqlParameter[]
-                        {
-                            new SqlParameter("@SalesInvoiceId", salesInvoiceId),
-                            new SqlParameter("@Amount", finalTotal),
-                            new SqlParameter("@Method", "Cash"),
-                            new SqlParameter("@CashReceived", cashReceived),
-                            new SqlParameter("@ReceivedByStaffId", staffId)
-                        },
-                        CommandType.StoredProcedure);
                 }
 
-                MessageBox.Show("Thanh toán thành công.");
+                DataTable items = BuildCheckoutItems();
+
+                SqlParameter[] pr =
+                {
+                    new SqlParameter("@CustomerId", selectedCustomerId == 0 ? (object)DBNull.Value : selectedCustomerId),
+                    new SqlParameter("@DiscountPercent", discountPercent),
+                    new SqlParameter("@DiscountAmount", discountAmount),
+                    new SqlParameter("@Note", string.IsNullOrWhiteSpace(txtNote.Text) ? (object)DBNull.Value : txtNote.Text.Trim()),
+                    new SqlParameter("@CreatedByStaffId", staffId),
+                    new SqlParameter("@PaymentMethod", paymentMethod),
+                    new SqlParameter("@CashReceived", paymentMethod == "Cash" ? (object)cashReceived : DBNull.Value),
+                    new SqlParameter("@Items", items)
+                {
+                SqlDbType = SqlDbType.Structured,
+                TypeName = "SalesCheckoutItemType"
+                }
+                };
+
+                object result = db.ExecuteScalar(
+                    "sp_CheckoutSalesInvoice",
+                    pr,
+                    CommandType.StoredProcedure
+                );
+
+                if (result == null || result == DBNull.Value)
+                {
+                    MessageBox.Show("Không tạo được hóa đơn.");
+                    return;
+                }
+
+                int salesInvoiceId = Convert.ToInt32(result);
+
+                MessageBox.Show("Thanh toán thành công. Mã hóa đơn: " + salesInvoiceId);
+
                 ResetForm();
                 LoadProducts();
             }
@@ -607,6 +586,24 @@ namespace Gym_Management.Main.Staff
         private void flowProducts_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+        private DataTable BuildCheckoutItems()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ProductId", typeof(int));
+            dt.Columns.Add("Quantity", typeof(int));
+            dt.Columns.Add("Price", typeof(decimal));
+
+            foreach (DataRow row in cartTable.Rows)
+            {
+                dt.Rows.Add(
+                    Convert.ToInt32(row["ProductId"]),
+                    Convert.ToInt32(row["Số lượng"]),
+                    Convert.ToDecimal(row["Đơn giá"])
+                );
+            }
+
+            return dt;
         }
     }
 }
