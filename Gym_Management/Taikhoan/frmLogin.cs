@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Gym_Management.Data;
+using Gym_Management.Main.Admin;
+using Gym_Management.Main.Staff;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using Gym_Management.Data;
-using Gym_Management.Main.Staff;
 
 namespace Gym_Management.TaiKhoan
 {
@@ -71,18 +72,28 @@ namespace Gym_Management.TaiKhoan
                     string fullName = user["FullName"].ToString();
                     string role = user["Role"].ToString();
 
-                    if (role == "Staff")
+                    this.Hide();
+
+                    Form mainForm;
+
+                    if (role == "Admin")
                     {
-                        MainStaffForm f = new MainStaffForm(userId, fullName);
-                        f.Show();
-                        this.Hide();
+                        mainForm = new MainAdminForm(userId, fullName);
                     }
-                    else if (role == "Admin")
+                    else
                     {
-                        Main.Admin.MainAdminForm f = new Main.Admin.MainAdminForm(userId, fullName);
-                        f.Show();
-                        this.Hide();
+                        mainForm = new MainStaffForm(userId, fullName);
                     }
+
+                    mainForm.FormClosed += (s, args) =>
+                    {
+                        this.Show();
+                        txtUsername.Clear();
+                        txtPassword.Clear();
+                        txtUsername.Focus();
+                    };
+
+                    mainForm.Show();
                 }
                 else
                 {

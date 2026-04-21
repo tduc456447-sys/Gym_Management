@@ -71,18 +71,16 @@ namespace Gym_Management.Main.Admin
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            DialogResult rs = MessageBox.Show(
-                "Bạn có chắc muốn đăng xuất không?",
-                "Xác nhận",
+            DialogResult result = MessageBox.Show(
+                "Bạn có muốn đăng xuất không?",
+                "Đăng xuất",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
             );
 
-            if (rs == DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
-                this.Hide();
-                frmLogin login = new frmLogin();
-                login.Show();
+                this.Close();
             }
         }
     }
