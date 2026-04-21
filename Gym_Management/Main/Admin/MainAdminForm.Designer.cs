@@ -28,6 +28,8 @@
         private void InitializeComponent()
         {
             this.panelMenu = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.btnHLV = new System.Windows.Forms.Button();
             this.btnSystemConfig = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnStaffManagement = new System.Windows.Forms.Button();
@@ -37,8 +39,7 @@
             this.lblAdminName = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.panelContent = new System.Windows.Forms.Panel();
-            this.btnHLV = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnHangDaNhap = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +47,7 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
+            this.panelMenu.Controls.Add(this.btnHangDaNhap);
             this.panelMenu.Controls.Add(this.button2);
             this.panelMenu.Controls.Add(this.btnHLV);
             this.panelMenu.Controls.Add(this.btnSystemConfig);
@@ -58,6 +60,41 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(220, 700);
             this.panelMenu.TabIndex = 0;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(0, 275);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.button2.Size = new System.Drawing.Size(220, 55);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Báo cáo";
+            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // btnHLV
+            // 
+            this.btnHLV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnHLV.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnHLV.FlatAppearance.BorderSize = 0;
+            this.btnHLV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHLV.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnHLV.ForeColor = System.Drawing.Color.White;
+            this.btnHLV.Location = new System.Drawing.Point(0, 220);
+            this.btnHLV.Name = "btnHLV";
+            this.btnHLV.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnHLV.Size = new System.Drawing.Size(220, 55);
+            this.btnHLV.TabIndex = 6;
+            this.btnHLV.Text = "Quản lý HLV";
+            this.btnHLV.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnHLV.UseVisualStyleBackColor = false;
+            this.btnHLV.Click += new System.EventHandler(this.btnHLV_Click);
             // 
             // btnSystemConfig
             // 
@@ -188,40 +225,23 @@
             this.panelContent.Size = new System.Drawing.Size(980, 640);
             this.panelContent.TabIndex = 2;
             // 
-            // btnHLV
+            // btnHangDaNhap
             // 
-            this.btnHLV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.btnHLV.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnHLV.FlatAppearance.BorderSize = 0;
-            this.btnHLV.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHLV.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.btnHLV.ForeColor = System.Drawing.Color.White;
-            this.btnHLV.Location = new System.Drawing.Point(0, 220);
-            this.btnHLV.Name = "btnHLV";
-            this.btnHLV.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.btnHLV.Size = new System.Drawing.Size(220, 55);
-            this.btnHLV.TabIndex = 6;
-            this.btnHLV.Text = "Quản lý HLV";
-            this.btnHLV.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnHLV.UseVisualStyleBackColor = false;
-            this.btnHLV.Click += new System.EventHandler(this.btnHLV_Click);
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.button2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(0, 275);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.button2.Size = new System.Drawing.Size(220, 55);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Báo cáo";
-            this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnHangDaNhap.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnHangDaNhap.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnHangDaNhap.FlatAppearance.BorderSize = 0;
+            this.btnHangDaNhap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHangDaNhap.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnHangDaNhap.ForeColor = System.Drawing.Color.White;
+            this.btnHangDaNhap.Location = new System.Drawing.Point(0, 330);
+            this.btnHangDaNhap.Name = "btnHangDaNhap";
+            this.btnHangDaNhap.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnHangDaNhap.Size = new System.Drawing.Size(220, 55);
+            this.btnHangDaNhap.TabIndex = 8;
+            this.btnHangDaNhap.Text = "Hàng đã nhập";
+            this.btnHangDaNhap.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnHangDaNhap.UseVisualStyleBackColor = false;
+            this.btnHangDaNhap.Click += new System.EventHandler(this.btnHangDaNhap_Click);
             // 
             // MainAdminForm
             // 
@@ -245,5 +265,6 @@
 
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnHLV;
+        private System.Windows.Forms.Button btnHangDaNhap;
     }
 }

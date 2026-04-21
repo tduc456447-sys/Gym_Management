@@ -92,5 +92,10 @@ namespace Gym_Management.Main.Admin
         {
             LoadFormToPanel(new frmManagingPT());
         }
+
+        private void btnHangDaNhap_Click(object sender, EventArgs e)
+        {
+            LoadFormToPanel(new frmimportgoods());
+        }
     }
 }
