@@ -82,9 +82,7 @@ namespace Gym_Management.Main.Admin
 
             if (rs == DialogResult.Yes)
             {
-                this.Hide();
-                frmLogin login = new frmLogin();
-                login.Show();
+                this.Close();
             }
         }
 

@@ -65,24 +65,30 @@ namespace Gym_Management.TaiKhoan
 
                 if (user != null)
                 {
-                    MessageBox.Show("Đăng nhập thành công");
-
                     int userId = Convert.ToInt32(user["UserId"]);
                     string fullName = user["FullName"].ToString();
                     string role = user["Role"].ToString();
 
+                    this.Hide();
+
                     if (role == "Staff")
                     {
-                        MainStaffForm f = new MainStaffForm(userId, fullName);
-                        f.Show();
-                        this.Hide();
+                        using (MainStaffForm f = new MainStaffForm(userId, fullName))
+                        {
+                            f.ShowDialog();
+                        }
                     }
                     else if (role == "Admin")
                     {
-                        Main.Admin.MainAdminForm f = new Main.Admin.MainAdminForm(userId, fullName);
-                        f.Show();
-                        this.Hide();
+                        using (Main.Admin.MainAdminForm f = new Main.Admin.MainAdminForm(userId, fullName))
+                        {
+                            f.ShowDialog();
+                        }
                     }
+
+                    txtPassword.Clear();
+                    this.Show();
+                    this.Activate();
                 }
                 else
                 {
