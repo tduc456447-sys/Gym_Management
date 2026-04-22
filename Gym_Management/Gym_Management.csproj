@@ -176,6 +176,18 @@
     <Compile Include="Main\Admin\ucAdminDashboard.Designer.cs">
       <DependentUpon>ucAdminDashboard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Shared\ExpiringMembersManagement\FrmExpiringMembers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Shared\ExpiringMembersManagement\FrmExpiringMembers.Designer.cs">
+      <DependentUpon>FrmExpiringMembers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Shared\InvoiceManagement\InvoiceHistoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Shared\InvoiceManagement\InvoiceHistoryForm.Designer.cs">
+      <DependentUpon>InvoiceHistoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\Staff\AddCustomerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -193,6 +205,12 @@
     </Compile>
     <Compile Include="Main\Staff\MainStaffForm.Designer.cs">
       <DependentUpon>MainStaffForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\MembersManagement\CheckinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\MembersManagement\CheckinForm.Designer.cs">
+      <DependentUpon>CheckinForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Staff\MembersManagement\MemberDetailForm.cs">
       <SubType>Form</SubType>
@@ -217,6 +235,18 @@
     </Compile>
     <Compile Include="Main\Staff\MembersManagement\RenewMembershipForm.Designer.cs">
       <DependentUpon>RenewMembershipForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\PTManagement\PTScheduleEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\PTManagement\PTScheduleEditForm.Designer.cs">
+      <DependentUpon>PTScheduleEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Staff\PTManagement\PTScheduleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Staff\PTManagement\PTScheduleForm.Designer.cs">
+      <DependentUpon>PTScheduleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Main\Staff\SaleManagement\SalesForm.cs">
       <SubType>Form</SubType>
@@ -301,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Staff\MainStaffForm.resx">
       <DependentUpon>MainStaffForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Staff\MembersManagement\RegisterMembershipForm.resx">
+      <DependentUpon>RegisterMembershipForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Staff\SaleManagement\SalesForm.resx">
       <DependentUpon>SalesForm.cs</DependentUpon>

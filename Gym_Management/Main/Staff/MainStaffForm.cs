@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Gym_Management.Main.Shared.InvoiceManagement;
+using GymManagement;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -84,6 +86,21 @@ namespace Gym_Management.Main.Staff
             {
                 this.Close();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadForm(new PTScheduleForm(_userId));
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LoadForm(new InvoiceHistoryForm(_userId, _fullName, false));
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            LoadForm(new FrmExpiringMembers());
         }
     }
 }

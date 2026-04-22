@@ -28,6 +28,7 @@ namespace Gym_Management.Main.Staff
         {
             cboStatus.Items.Clear();
             cboStatus.Items.Add("Tất cả");
+            cboStatus.Items.Add("Chưa đăng ký");
             cboStatus.Items.Add("Active");
             cboStatus.Items.Add("Pending");
             cboStatus.Items.Add("Expired");
@@ -42,11 +43,11 @@ namespace Gym_Management.Main.Staff
                     c.CustomerId AS [Mã KH],
                     c.FullName AS [Họ tên],
                     c.Phone AS [SĐT],
-                    mp.CardCode AS [Mã thẻ],
-                    p.Name AS [Gói hiện tại],
+                    ISNULL(mp.CardCode, '') AS [Mã thẻ],
+                    ISNULL(p.Name, N'Chưa đăng ký') AS [Gói hiện tại],
                     m.StartDate AS [Bắt đầu],
                     m.EndDate AS [Kết thúc],
-                    m.Status AS [Trạng thái]
+                    ISNULL(m.Status, N'Chưa đăng ký') AS [Trạng thái]
                 FROM Customers c
                 LEFT JOIN MemberProfiles mp ON c.CustomerId = mp.CustomerId
                 LEFT JOIN
@@ -77,6 +78,27 @@ namespace Gym_Management.Main.Staff
             };
 
             dgvMembers.DataSource = db.ExecuteQuery(sql, pr);
+            FormatGrid();
+        }
+
+        private void FormatGrid()
+        {
+            if (dgvMembers.Columns.Count == 0) return;
+
+            if (dgvMembers.Columns.Contains("Mã KH"))
+                dgvMembers.Columns["Mã KH"].Width = 70;
+
+            if (dgvMembers.Columns.Contains("Họ tên"))
+                dgvMembers.Columns["Họ tên"].Width = 180;
+
+            if (dgvMembers.Columns.Contains("SĐT"))
+                dgvMembers.Columns["SĐT"].Width = 110;
+
+            if (dgvMembers.Columns.Contains("Mã thẻ"))
+                dgvMembers.Columns["Mã thẻ"].Width = 110;
+
+            if (dgvMembers.Columns.Contains("Trạng thái"))
+                dgvMembers.Columns["Trạng thái"].Width = 100;
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -92,11 +114,23 @@ namespace Gym_Management.Main.Staff
         private int GetSelectedCustomerId()
         {
             if (dgvMembers.CurrentRow == null) return 0;
+            if (dgvMembers.CurrentRow.Cells["Mã KH"].Value == null) return 0;
             return Convert.ToInt32(dgvMembers.CurrentRow.Cells["Mã KH"].Value);
+        }
+
+        private string GetSelectedCardCode()
+        {
+            if (dgvMembers.CurrentRow == null) return string.Empty;
+            if (!dgvMembers.Columns.Contains("Mã thẻ")) return string.Empty;
+
+            object value = dgvMembers.CurrentRow.Cells["Mã thẻ"].Value;
+            return value == null ? string.Empty : value.ToString().Trim();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
+            txtSearch.Clear();
+            cboStatus.SelectedIndex = 0;
             LoadMembers();
         }
 
@@ -105,7 +139,7 @@ namespace Gym_Management.Main.Staff
             int customerId = GetSelectedCustomerId();
             if (customerId == 0)
             {
-                MessageBox.Show("Vui lòng chọn hội viên/khách hàng.");
+                MessageBox.Show("Vui lòng chọn hội viên/khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -113,6 +147,8 @@ namespace Gym_Management.Main.Staff
             {
                 f.ShowDialog();
             }
+
+            LoadMembers();
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -129,7 +165,7 @@ namespace Gym_Management.Main.Staff
             int customerId = GetSelectedCustomerId();
             if (customerId == 0)
             {
-                MessageBox.Show("Vui lòng chọn hội viên cần gia hạn.");
+                MessageBox.Show("Vui lòng chọn hội viên cần gia hạn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -138,6 +174,20 @@ namespace Gym_Management.Main.Staff
                 if (f.ShowDialog() == DialogResult.OK)
                     LoadMembers();
             }
+        }
+
+        private void btnCheckin_Click(object sender, EventArgs e)
+        {
+            string cardCode = GetSelectedCardCode();
+
+            using (CheckinForm f = string.IsNullOrWhiteSpace(cardCode)
+                ? new CheckinForm()
+                : new CheckinForm(cardCode))
+            {
+                f.ShowDialog();
+            }
+
+            LoadMembers();
         }
 
         private void dgvMembers_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -150,9 +200,14 @@ namespace Gym_Management.Main.Staff
         {
             dgv.ReadOnly = true;
             dgv.AllowUserToAddRows = false;
+            dgv.AllowUserToDeleteRows = false;
+            dgv.MultiSelect = false;
             dgv.RowHeadersVisible = false;
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dgv.BackgroundColor = System.Drawing.Color.White;
+            dgv.BorderStyle = BorderStyle.FixedSingle;
         }
     }
 }

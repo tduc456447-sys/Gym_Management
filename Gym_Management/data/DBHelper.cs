@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
 
 namespace Gym_Management.Data
 {
@@ -15,44 +11,24 @@ namespace Gym_Management.Data
             ConfigurationManager.ConnectionStrings["GymManagementDb"]?.ConnectionString
             ?? throw new Exception("Không tìm thấy connection string 'GymManagementDb' trong App.config");
 
-
-        public DBHelper() { }
-
         public DataTable ExecuteQuery(string query, SqlParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
             DataTable dt = new DataTable();
 
             using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = BuildCommand(conn, query, parameters, commandType))
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.CommandType = commandType;
-
-                    if (parameters != null)
+                    conn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        foreach (SqlParameter p in parameters)
-                        {
-                            if (p.Value is DateTime)
-                            {
-                                DateTime dtValue = (DateTime)p.Value;
-                                if (dtValue < new DateTime(1753, 1, 1))
-                                    p.Value = DBNull.Value;
-                            }
-
-                            cmd.Parameters.Add(p);
-                        }
-                    }
-
-                    try
-                    {
-                        conn.Open();
-                        SqlDataAdapter da = new SqlDataAdapter(cmd);
                         da.Fill(dt);
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi lấy dữ liệu: " + ex.Message);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Lỗi khi lấy dữ liệu: " + ex.Message, ex);
                 }
             }
 
@@ -61,94 +37,99 @@ namespace Gym_Management.Data
 
         public int ExecuteNonQuery(string query, SqlParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
-            int result = 0;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = BuildCommand(conn, query, parameters, commandType))
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.CommandType = commandType;
-
-                    if (parameters != null)
-                    {
-                        foreach (SqlParameter p in parameters)
-                        {
-                            if (p.Value is DateTime)
-                            {
-                                DateTime dtValue = (DateTime)p.Value;
-                                if (dtValue < new DateTime(1753, 1, 1))
-                                    p.Value = DBNull.Value;
-                            }
-
-                            cmd.Parameters.Add(p);
-                        }
-                    }
-
-                    try
-                    {
-                        conn.Open();
-                        result = cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi thực hiện câu lệnh: " + ex.Message);
-                    }
+                    conn.Open();
+                    return cmd.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Lỗi khi thực hiện câu lệnh: " + ex.Message, ex);
                 }
             }
-
-            return result;
         }
 
         public object ExecuteScalar(string query, SqlParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
-            object result = null;
-
             using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = BuildCommand(conn, query, parameters, commandType))
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.CommandType = commandType;
+                    conn.Open();
+                    return cmd.ExecuteScalar();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Lỗi khi lấy giá trị: " + ex.Message, ex);
+                }
+            }
+        }
 
-                    if (parameters != null)
-                    {
-                        foreach (SqlParameter p in parameters)
-                        {
-                            if (p.Value is DateTime)
-                            {
-                                DateTime dtValue = (DateTime)p.Value;
-                                if (dtValue < new DateTime(1753, 1, 1))
-                                    p.Value = DBNull.Value;
-                            }
+        private SqlCommand BuildCommand(SqlConnection conn, string query, SqlParameter[] parameters, CommandType commandType)
+        {
+            SqlCommand cmd = new SqlCommand(query, conn)
+            {
+                CommandType = commandType,
+                CommandTimeout = 120
+            };
 
-                            cmd.Parameters.Add(p);
-                        }
-                    }
-
-                    try
-                    {
-                        conn.Open();
-                        result = cmd.ExecuteScalar();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi lấy giá trị: " + ex.Message);
-                    }
+            if (parameters != null)
+            {
+                foreach (SqlParameter source in parameters)
+                {
+                    SqlParameter p = CloneParameter(source);
+                    NormalizeParameterValue(p);
+                    cmd.Parameters.Add(p);
                 }
             }
 
-            return result;
+            return cmd;
         }
-        public object ExecuteScalar(string sql, SqlParameter[] parameters)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    if (parameters != null)
-                        cmd.Parameters.AddRange(parameters);
 
-                    conn.Open();
-                    return cmd.ExecuteScalar();
+        private static SqlParameter CloneParameter(SqlParameter source)
+        {
+            SqlParameter clone = new SqlParameter
+            {
+                ParameterName = source.ParameterName,
+                SqlDbType = source.SqlDbType,
+                Direction = source.Direction,
+                Size = source.Size,
+                Precision = source.Precision,
+                Scale = source.Scale,
+                TypeName = source.TypeName,
+                Value = source.Value ?? DBNull.Value
+            };
+
+            if (source.SqlDbType == 0 && source.Value != null && source.Value != DBNull.Value)
+            {
+                clone = new SqlParameter(source.ParameterName, source.Value)
+                {
+                    Direction = source.Direction,
+                    TypeName = source.TypeName
+                };
+            }
+
+            return clone;
+        }
+
+        private static void NormalizeParameterValue(SqlParameter p)
+        {
+            if (p.Value == null)
+            {
+                p.Value = DBNull.Value;
+                return;
+            }
+
+            if (p.Value is DateTime)
+            {
+                DateTime dtValue = (DateTime)p.Value;
+                if (dtValue < new DateTime(1753, 1, 1))
+                {
+                    p.Value = DBNull.Value;
                 }
             }
         }

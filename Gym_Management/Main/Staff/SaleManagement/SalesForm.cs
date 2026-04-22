@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Gym_Management.Data;
 
@@ -19,6 +20,7 @@ namespace Gym_Management.Main.Staff
         private decimal discountPercent = 0;
 
         private DataTable cartTable;
+        private bool isCheckingOut = false;
 
         public SalesForm(int userId, string fullName)
         {
@@ -149,7 +151,7 @@ namespace Gym_Management.Main.Staff
                 string imagePath = Path.Combine(imageFolder, fileName);
 
                 if (!string.IsNullOrWhiteSpace(fileName) && File.Exists(imagePath))
-                    pbImage.Image = Image.FromFile(imagePath);
+                    pbImage.Image = LoadImageWithoutLock(imagePath);
                 else
                     pbImage.Image = null;
             }
@@ -358,11 +360,19 @@ namespace Gym_Management.Main.Staff
                     return;
                 }
 
-                DataRow row = dt.Rows[0];
+                DataRow selectedRow = dt.Rows.Count == 1
+                    ? dt.Rows[0]
+                    : ShowCustomerPicker(dt);
+
+                if (selectedRow == null)
+                {
+                    return;
+                }
+
                 SetCustomerInfo(
-                    Convert.ToInt32(row["CustomerId"]),
-                    row["FullName"].ToString(),
-                    Convert.ToBoolean(row["IsActiveMember"])
+                    Convert.ToInt32(selectedRow["CustomerId"]),
+                    selectedRow["FullName"].ToString(),
+                    Convert.ToBoolean(selectedRow["IsActiveMember"])
                 );
             }
             catch (Exception ex)
@@ -379,6 +389,88 @@ namespace Gym_Management.Main.Staff
                 {
                     SetCustomerInfo(f.NewCustomerId, f.NewCustomerDisplayText, false);
                 }
+            }
+        }
+
+        private static Image LoadImageWithoutLock(string imagePath)
+        {
+            using (FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+            using (Image temp = Image.FromStream(fs))
+            {
+                return new Bitmap(temp);
+            }
+        }
+
+        private DataRow ShowCustomerPicker(DataTable dt)
+        {
+            using (Form picker = new Form())
+            using (DataGridView grid = new DataGridView())
+            using (Button btnSelect = new Button())
+            using (Button btnCancel = new Button())
+            {
+                picker.Text = "Chọn khách hàng";
+                picker.StartPosition = FormStartPosition.CenterParent;
+                picker.FormBorderStyle = FormBorderStyle.FixedDialog;
+                picker.MinimizeBox = false;
+                picker.MaximizeBox = false;
+                picker.ShowInTaskbar = false;
+                picker.ClientSize = new Size(640, 380);
+
+                grid.Parent = picker;
+                grid.Location = new Point(12, 12);
+                grid.Size = new Size(616, 300);
+                grid.ReadOnly = true;
+                grid.AllowUserToAddRows = false;
+                grid.AllowUserToDeleteRows = false;
+                grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                grid.MultiSelect = false;
+                grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                grid.RowHeadersVisible = false;
+                grid.DataSource = dt.Copy();
+
+                if (grid.Columns["CustomerId"] != null)
+                    grid.Columns["CustomerId"].HeaderText = "Mã KH";
+                if (grid.Columns["FullName"] != null)
+                    grid.Columns["FullName"].HeaderText = "Họ tên";
+                if (grid.Columns["Phone"] != null)
+                    grid.Columns["Phone"].HeaderText = "SĐT";
+                if (grid.Columns["IsActiveMember"] != null)
+                {
+                    grid.Columns["IsActiveMember"].HeaderText = "Hội viên active";
+                    grid.Columns["IsActiveMember"].FillWeight = 80;
+                }
+
+                btnSelect.Parent = picker;
+                btnSelect.Text = "Chọn";
+                btnSelect.Size = new Size(100, 32);
+                btnSelect.Location = new Point(418, 330);
+                btnSelect.DialogResult = DialogResult.OK;
+
+                btnCancel.Parent = picker;
+                btnCancel.Text = "Hủy";
+                btnCancel.Size = new Size(100, 32);
+                btnCancel.Location = new Point(528, 330);
+                btnCancel.DialogResult = DialogResult.Cancel;
+
+                picker.AcceptButton = btnSelect;
+                picker.CancelButton = btnCancel;
+
+                grid.CellDoubleClick += (s, e) =>
+                {
+                    if (e.RowIndex >= 0)
+                    {
+                        picker.DialogResult = DialogResult.OK;
+                        picker.Close();
+                    }
+                };
+
+                if (picker.ShowDialog(this) != DialogResult.OK || grid.CurrentRow == null)
+                {
+                    return null;
+                }
+
+                DataRowView view = grid.CurrentRow.DataBoundItem as DataRowView;
+                return view == null ? null : view.Row;
             }
         }
 
@@ -499,14 +591,29 @@ namespace Gym_Management.Main.Staff
 
         private void btnCheckout_Click(object sender, EventArgs e)
         {
+            if (isCheckingOut)
+            {
+                return;
+            }
+
             if (cartTable.Rows.Count == 0)
             {
                 MessageBox.Show("Giỏ hàng đang trống.");
                 return;
             }
 
+            string paymentMethod = cboPaymentMethod.Text;
+            if (paymentMethod != "Cash" && paymentMethod != "Online")
+            {
+                MessageBox.Show("Phương thức thanh toán không hợp lệ.");
+                return;
+            }
+
             try
             {
+                isCheckingOut = true;
+                btnCheckout.Enabled = false;
+
                 decimal subTotal = 0;
                 decimal finalTotal = 0;
 
@@ -514,8 +621,6 @@ namespace Gym_Management.Main.Staff
                 decimal.TryParse(lblFinalTotal.Text.Replace(",", ""), out finalTotal);
 
                 decimal discountAmount = subTotal * discountPercent / 100M;
-
-                string paymentMethod = cboPaymentMethod.Text;
                 decimal cashReceived = 0;
 
                 if (paymentMethod == "Cash")
@@ -541,10 +646,10 @@ namespace Gym_Management.Main.Staff
                     new SqlParameter("@PaymentMethod", paymentMethod),
                     new SqlParameter("@CashReceived", paymentMethod == "Cash" ? (object)cashReceived : DBNull.Value),
                     new SqlParameter("@Items", items)
-                {
-                SqlDbType = SqlDbType.Structured,
-                TypeName = "SalesCheckoutItemType"
-                }
+                    {
+                        SqlDbType = SqlDbType.Structured,
+                        TypeName = "SalesCheckoutItemType"
+                    }
                 };
 
                 object result = db.ExecuteScalar(
@@ -569,6 +674,11 @@ namespace Gym_Management.Main.Staff
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi thanh toán: " + ex.Message);
+            }
+            finally
+            {
+                isCheckingOut = false;
+                btnCheckout.Enabled = true;
             }
         }
 

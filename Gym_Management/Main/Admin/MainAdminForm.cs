@@ -1,7 +1,9 @@
 ﻿using Gym_Management.Main.Admin;
 using Gym_Management.Main.Admin.ProductManagement;
 using Gym_Management.Main.Admin.StaffManagement;
+using Gym_Management.Main.Shared.InvoiceManagement;
 using Gym_Management.TaiKhoan;
+using GymManagement;
 using System;
 using System.Windows.Forms;
 
@@ -82,6 +84,16 @@ namespace Gym_Management.Main.Admin
             {
                 this.Close();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoadFormToPanel(new InvoiceHistoryForm(_userId, _fullName, true));
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LoadFormToPanel(new FrmExpiringMembers());
         }
     }
 }
