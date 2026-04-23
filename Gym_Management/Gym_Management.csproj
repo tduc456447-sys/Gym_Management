@@ -104,6 +104,24 @@
     <Compile Include="Main\Admin\MainAdminForm.Designer.cs">
       <DependentUpon>MainAdminForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\Admin\MembersManagement\AdminMemberEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\MembersManagement\AdminMemberEditForm.Designer.cs">
+      <DependentUpon>AdminMemberEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\MembersManagement\AdminMembersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\MembersManagement\AdminMembersForm.Designer.cs">
+      <DependentUpon>AdminMembersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Admin\PackageManagement\frmPackageManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Admin\PackageManagement\frmPackageManagement.Designer.cs">
+      <DependentUpon>frmPackageManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\Admin\ProductManagement\frmProductManagement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -302,6 +320,9 @@
     <EmbeddedResource Include="Main\Admin\MainAdminForm.resx">
       <DependentUpon>MainAdminForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\MembersManagement\AdminMembersForm.resx">
+      <DependentUpon>AdminMembersForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\ProductManagement\frmProductManagement.resx">
       <DependentUpon>frmProductManagement.cs</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +346,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Admin\StaffManagement\frmStaffManagement.resx">
       <DependentUpon>frmStaffManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main\Admin\TrainerManagement\TrainerManagementForm.resx">
+      <DependentUpon>TrainerManagementForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main\Staff\DashboardForm.resx">
       <DependentUpon>DashboardForm.cs</DependentUpon>

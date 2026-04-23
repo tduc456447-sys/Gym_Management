@@ -59,6 +59,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnToggleStatus = new System.Windows.Forms.Button();
             this.btnViewMembers = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBoxFilter.SuspendLayout();
             this.groupBoxList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTrainers)).BeginInit();
@@ -72,7 +73,7 @@
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
             this.lblTitle.Location = new System.Drawing.Point(19, 13);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(293, 32);
+            this.lblTitle.Size = new System.Drawing.Size(291, 32);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Quản lý huấn luyện viên";
             // 
@@ -515,9 +516,22 @@
             this.btnViewMembers.UseVisualStyleBackColor = false;
             this.btnViewMembers.Click += new System.EventHandler(this.btnViewMembers_Click);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Gold;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(637, 714);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(128, 40);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Xem lịch pt";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // TrainerManagementForm
             // 
             this.ClientSize = new System.Drawing.Size(1255, 772);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnViewMembers);
             this.Controls.Add(this.btnToggleStatus);
             this.Controls.Add(this.btnEdit);
@@ -588,5 +602,6 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnToggleStatus;
         private System.Windows.Forms.Button btnViewMembers;
+        private System.Windows.Forms.Button button1;
     }
 }

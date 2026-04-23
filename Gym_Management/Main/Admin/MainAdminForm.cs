@@ -1,4 +1,5 @@
 ﻿using Gym_Management.Main.Admin;
+using Gym_Management.Main.Admin.PackageManagement;
 using Gym_Management.Main.Admin.ProductManagement;
 using Gym_Management.Main.Admin.StaffManagement;
 using Gym_Management.Main.Shared.InvoiceManagement;
@@ -94,6 +95,16 @@ namespace Gym_Management.Main.Admin
         private void button2_Click(object sender, EventArgs e)
         {
             LoadFormToPanel(new FrmExpiringMembers());
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            LoadFormToPanel(new AdminMembersForm(_userId, _fullName));
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            LoadFormToPanel(new frmPackageManagement());
         }
     }
 }

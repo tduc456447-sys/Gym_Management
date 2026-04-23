@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Gym_Management.Data;
+using Gym_Management.Main.Staff;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using Gym_Management.Data;
 
 namespace Gym_Management.Main.Admin
 {
@@ -352,6 +353,17 @@ namespace Gym_Management.Main.Admin
             using (TrainerMembersForm f = new TrainerMembersForm(selectedTrainerId, lblNameValue.Text))
             {
                 f.ShowDialog();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (PTScheduleForm f = new PTScheduleForm(selectedTrainerId))
+            {
+                if (f.ShowDialog() == DialogResult.OK)
+                {
+                    LoadTrainerList();
+                }
             }
         }
     }
