@@ -40,16 +40,54 @@ namespace Gym_Management.Main.Staff
                     new SqlParameter("@UserId", userId)
                 });
 
+            cboShift.DataSource = null;
+
+            if (dt.Rows.Count == 0)
+            {
+                btnCheckIn.Enabled = false;
+                btnCheckOut.Enabled = false;
+                MessageBox.Show("Hôm nay bạn không có ca trực.");
+                return;
+            }
+
             cboShift.DataSource = dt;
             cboShift.DisplayMember = "DisplayText";
             cboShift.ValueMember = "ShiftId";
+
+            btnCheckIn.Enabled = true;
+            btnCheckOut.Enabled = true;
         }
+
+        private bool HasTodayShift()
+        {
+            return cboShift.DataSource != null && cboShift.SelectedValue != null;
+        }
+
+        private bool HasCheckedInToday(int shiftId)
+        {
+            object result = db.ExecuteScalar(@"
+        SELECT COUNT(*)
+        FROM Attendances
+        WHERE UserId = @UserId
+          AND ShiftId = @ShiftId
+          AND WorkDate = @WorkDate
+          AND CheckIn IS NOT NULL",
+                new SqlParameter[]
+                {
+            new SqlParameter("@UserId", userId),
+            new SqlParameter("@ShiftId", shiftId),
+            new SqlParameter("@WorkDate", DateTime.Today)
+                });
+
+            return Convert.ToInt32(result) > 0;
+        }
+
 
         private void btnCheckIn_Click(object sender, EventArgs e)
         {
-            if (cboShift.SelectedValue == null)
+            if (!HasTodayShift())
             {
-                MessageBox.Show("Hôm nay bạn chưa đăng ký ca.");
+                MessageBox.Show("Hôm nay bạn không có ca trực.");
                 return;
             }
 
@@ -68,7 +106,7 @@ namespace Gym_Management.Main.Staff
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi check-in: " + ex.Message);
+                MessageBox.Show(ex.Message, "Không thể check-in", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -76,7 +114,15 @@ namespace Gym_Management.Main.Staff
         {
             if (cboShift.SelectedValue == null)
             {
-                MessageBox.Show("Hôm nay bạn chưa đăng ký ca.");
+                MessageBox.Show("Hôm nay bạn không có ca trực.");
+                return;
+            }
+
+            int shiftId = Convert.ToInt32(cboShift.SelectedValue);
+
+            if (!HasCheckedInToday(shiftId))
+            {
+                MessageBox.Show("Bạn chưa check-in ca này.");
                 return;
             }
 
@@ -85,9 +131,9 @@ namespace Gym_Management.Main.Staff
                 db.ExecuteNonQuery("sp_CheckOutShift",
                     new SqlParameter[]
                     {
-                        new SqlParameter("@UserId", userId),
-                        new SqlParameter("@ShiftId", Convert.ToInt32(cboShift.SelectedValue)),
-                        new SqlParameter("@WorkDate", DateTime.Today)
+                new SqlParameter("@UserId", userId),
+                new SqlParameter("@ShiftId", shiftId),
+                new SqlParameter("@WorkDate", DateTime.Today)
                     },
                     CommandType.StoredProcedure);
 

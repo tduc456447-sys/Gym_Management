@@ -2040,3 +2040,102 @@ GO
    ... FROM Customers c
    WHERE ISNULL(c.IsDeleted, 0) = 0
 */
+
+use GymManagementFinal
+go
+
+CREATE OR ALTER PROCEDURE sp_RegisterShift
+    @UserId INT,
+    @ShiftId INT,
+    @WorkDate DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Today DATE = CAST(GETDATE() AS DATE);
+    DECLARE @CurrentWeekStart DATE = DATEADD(DAY, -((DATEPART(WEEKDAY, @Today) + @@DATEFIRST - 2) % 7), @Today);
+    DECLARE @NextWeekStart DATE = DATEADD(DAY, 7, @CurrentWeekStart);
+    DECLARE @NextWeekEnd DATE = DATEADD(DAY, 6, @NextWeekStart);
+
+    IF @WorkDate < @NextWeekStart OR @WorkDate > @NextWeekEnd
+        THROW 50006, N'Staff chỉ được đăng ký ca trong tuần sau.', 1;
+
+    IF EXISTS (
+        SELECT 1
+        FROM UserShifts
+        WHERE UserId = @UserId AND ShiftId = @ShiftId AND WorkDate = @WorkDate
+    )
+        THROW 50007, N'Bạn đã đăng ký ca này rồi.', 1;
+
+    DECLARE @MaxStaff INT;
+    SELECT @MaxStaff = MaxStaff
+    FROM WorkShifts
+    WHERE ShiftId = @ShiftId;
+
+    IF @MaxStaff IS NULL
+        THROW 50008, N'Ca làm không tồn tại.', 1;
+
+    IF (
+        SELECT COUNT(*)
+        FROM UserShifts
+        WHERE ShiftId = @ShiftId AND WorkDate = @WorkDate
+    ) >= @MaxStaff
+        THROW 50009, N'Ca này đã đủ số lượng nhân viên.', 1;
+
+    INSERT INTO UserShifts(UserId, ShiftId, WorkDate)
+    VALUES (@UserId, @ShiftId, @WorkDate);
+END;
+GO
+
+CREATE OR ALTER PROCEDURE sp_CheckInShift
+    @UserId INT,
+    @ShiftId INT,
+    @WorkDate DATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Now DATETIME = GETDATE();
+    DECLARE @Today DATE = CAST(@Now AS DATE);
+
+    IF @WorkDate <> @Today
+        THROW 50010, N'Chỉ được check-in cho ca của hôm nay.', 1;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM UserShifts
+        WHERE UserId = @UserId AND ShiftId = @ShiftId AND WorkDate = @WorkDate
+    )
+        THROW 50011, N'Bạn chưa đăng ký ca này.', 1;
+
+    DECLARE @StartTime TIME, @EndTime TIME;
+    SELECT @StartTime = StartTime, @EndTime = EndTime
+    FROM WorkShifts
+    WHERE ShiftId = @ShiftId;
+
+    IF @StartTime IS NULL OR @EndTime IS NULL
+        THROW 50012, N'Ca làm không tồn tại.', 1;
+
+    DECLARE @AllowedFrom DATETIME = DATEADD(MINUTE, -15, CAST(CAST(@WorkDate AS DATETIME) + CAST(@StartTime AS DATETIME) AS DATETIME));
+    DECLARE @AllowedTo DATETIME = CAST(CAST(@WorkDate AS DATETIME) + CAST(@EndTime AS DATETIME) AS DATETIME);
+
+    IF @Now < @AllowedFrom
+        THROW 50013, N'Chưa đến giờ check-in của ca này.', 1;
+
+    IF @Now > @AllowedTo
+        THROW 50014, N'Đã quá giờ check-in của ca này.', 1;
+
+    IF EXISTS (
+        SELECT 1
+        FROM Attendances
+        WHERE UserId = @UserId
+          AND ShiftId = @ShiftId
+          AND WorkDate = @WorkDate
+          AND CheckIn IS NOT NULL
+    )
+        THROW 50015, N'Bạn đã check-in ca này rồi.', 1;
+
+    INSERT INTO Attendances(UserId, ShiftId, WorkDate, CheckIn)
+    VALUES(@UserId, @ShiftId, @WorkDate, @Now);
+END;
+GO

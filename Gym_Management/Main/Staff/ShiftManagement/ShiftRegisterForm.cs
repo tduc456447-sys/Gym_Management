@@ -17,7 +17,7 @@ namespace Gym_Management.Main.Staff
         {
             InitializeComponent();
             this.userId = userId;
-            this.workDate = workDate;
+            this.workDate = workDate.Date;
             this.preselectedShiftId = shiftId;
         }
 
@@ -28,6 +28,19 @@ namespace Gym_Management.Main.Staff
 
             if (preselectedShiftId > 0)
                 cboShift.SelectedValue = preselectedShiftId;
+        }
+
+        private DateTime GetStartOfWeek(DateTime date)
+        {
+            int diff = (7 + (date.DayOfWeek - DayOfWeek.Monday)) % 7;
+            return date.AddDays(-diff).Date;
+        }
+
+        private bool IsNextWeek(DateTime date)
+        {
+            DateTime nextWeekStart = GetStartOfWeek(DateTime.Today).AddDays(7);
+            DateTime nextWeekEnd = nextWeekStart.AddDays(6);
+            return date.Date >= nextWeekStart && date.Date <= nextWeekEnd;
         }
 
         private void LoadShifts()
@@ -47,6 +60,12 @@ namespace Gym_Management.Main.Staff
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
+            if (!IsNextWeek(workDate))
+            {
+                MessageBox.Show("Staff chỉ được đăng ký ca cho tuần sau.");
+                return;
+            }
+
             if (cboShift.SelectedValue == null)
             {
                 MessageBox.Show("Vui lòng chọn ca.");
@@ -62,7 +81,7 @@ namespace Gym_Management.Main.Staff
                     {
                         new SqlParameter("@UserId", userId),
                         new SqlParameter("@ShiftId", shiftId),
-                        new SqlParameter("@WorkDate", workDate.Date)
+                        new SqlParameter("@WorkDate", workDate)
                     },
                     CommandType.StoredProcedure);
 

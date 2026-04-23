@@ -21,8 +21,13 @@ namespace Gym_Management.Main.Staff
 
         private void ShiftCalendarForm_Load(object sender, EventArgs e)
         {
+            cboWeek.Items.Clear();
+            cboWeek.Items.Add("Tuần này");
+            cboWeek.Items.Add("Tuần sau");
             cboWeek.SelectedIndex = 0;
+
             currentWeekStart = GetStartOfWeek(DateTime.Today);
+
             LoadCalendar();
             CheckReminder();
         }
@@ -33,12 +38,23 @@ namespace Gym_Management.Main.Staff
             return date.AddDays(-diff).Date;
         }
 
+        private DateTime GetNextWeekStart()
+        {
+            return GetStartOfWeek(DateTime.Today).AddDays(7);
+        }
+
+        private bool IsDateInNextWeek(DateTime date)
+        {
+            DateTime nextWeekStart = GetNextWeekStart();
+            DateTime nextWeekEnd = nextWeekStart.AddDays(6);
+            return date.Date >= nextWeekStart && date.Date <= nextWeekEnd;
+        }
+
         private void LoadCalendar()
         {
             flowWeek.Controls.Clear();
 
             DateTime start = currentWeekStart;
-
             if (cboWeek.Text == "Tuần sau")
                 start = currentWeekStart.AddDays(7);
 
@@ -55,6 +71,13 @@ namespace Gym_Management.Main.Staff
                 LoadShiftsForDay(uc, date);
                 flowWeek.Controls.Add(uc);
             }
+
+            if (cboWeek.Text == "Tuần này")
+                lblStatus.Text = "Tuần này chỉ để xem lịch, không được đăng ký ca.";
+            else
+                CheckReminder();
+            btnPrev.Enabled = (cboWeek.SelectedIndex == 1);
+            btnNext.Enabled = (cboWeek.SelectedIndex == 0);
         }
 
         private void LoadShiftsForDay(ucDayShift uc, DateTime date)
@@ -100,39 +123,50 @@ namespace Gym_Management.Main.Staff
         {
             ContextMenuStrip menu = new ContextMenuStrip();
 
-            ToolStripMenuItem registerItem = new ToolStripMenuItem("Đăng ký ca");
-            registerItem.Click += (s, e) =>
+            // Chỉ cho đăng ký nếu là tuần sau
+            if (IsDateInNextWeek(workDate))
             {
-                using (ShiftRegisterForm f = new ShiftRegisterForm(userId, workDate, shiftId))
+                ToolStripMenuItem registerItem = new ToolStripMenuItem("Đăng ký ca");
+                registerItem.Click += (s, e) =>
                 {
-                    if (f.ShowDialog() == DialogResult.OK)
+                    using (ShiftRegisterForm f = new ShiftRegisterForm(userId, workDate, shiftId))
                     {
-                        LoadCalendar();
-                        CheckReminder();
+                        if (f.ShowDialog() == DialogResult.OK)
+                        {
+                            LoadCalendar();
+                            CheckReminder();
+                        }
                     }
-                }
-            };
-
-            ToolStripMenuItem attendanceItem = new ToolStripMenuItem("Chấm công hôm nay");
-            attendanceItem.Click += (s, e) =>
+                };
+                menu.Items.Add(registerItem);
+            }
+            else
             {
-                using (ShiftAttendanceForm f = new ShiftAttendanceForm(userId))
-                {
-                    f.ShowDialog();
-                }
-            };
+                ToolStripMenuItem blockedItem = new ToolStripMenuItem("Tuần này chỉ để xem");
+                blockedItem.Enabled = false;
+                menu.Items.Add(blockedItem);
+            }
 
-            menu.Items.Add(registerItem);
-
+            // Chỉ cho chấm công nếu là hôm nay
             if (workDate.Date == DateTime.Today)
+            {
+                ToolStripMenuItem attendanceItem = new ToolStripMenuItem("Chấm công hôm nay");
+                attendanceItem.Click += (s, e) =>
+                {
+                    using (ShiftAttendanceForm f = new ShiftAttendanceForm(userId))
+                    {
+                        f.ShowDialog();
+                    }
+                };
                 menu.Items.Add(attendanceItem);
+            }
 
             menu.Show(Cursor.Position);
         }
 
         private void CheckReminder()
         {
-            DateTime nextWeekStart = GetStartOfWeek(DateTime.Today).AddDays(7);
+            DateTime nextWeekStart = GetNextWeekStart();
             DateTime nextWeekEnd = nextWeekStart.AddDays(6);
 
             object count = db.ExecuteScalar(@"
@@ -147,9 +181,12 @@ namespace Gym_Management.Main.Staff
                     new SqlParameter("@EndDate", nextWeekEnd)
                 });
 
-            lblStatus.Text = Convert.ToInt32(count) == 0
-                ? "⚠ Bạn chưa đăng ký ca cho tuần sau"
-                : "";
+            if (cboWeek.Text == "Tuần sau")
+            {
+                lblStatus.Text = Convert.ToInt32(count) == 0
+                    ? "⚠ Bạn chưa đăng ký ca cho tuần sau"
+                    : "Đây là lịch đăng ký tuần sau";
+            }
         }
 
         private void cboWeek_SelectedIndexChanged(object sender, EventArgs e)
@@ -159,14 +196,18 @@ namespace Gym_Management.Main.Staff
 
         private void btnPrev_Click(object sender, EventArgs e)
         {
-            currentWeekStart = currentWeekStart.AddDays(-7);
-            LoadCalendar();
+            if (cboWeek.SelectedIndex == 1)
+            {
+                cboWeek.SelectedIndex = 0;
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            currentWeekStart = currentWeekStart.AddDays(7);
-            LoadCalendar();
+            if (cboWeek.SelectedIndex == 0)
+            {
+                cboWeek.SelectedIndex = 1;
+            }
         }
 
         private void btnAttendance_Click(object sender, EventArgs e)
